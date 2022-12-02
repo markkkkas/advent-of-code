@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	calories := groupAndSumEveryElveCalories()
+	calories := mustGroupAndSumEveryElveCalories()
 	sort.Ints(calories)
 	totalElves := len(calories)
 	firstPart := calories[totalElves-1]
@@ -18,7 +18,7 @@ func main() {
 	fmt.Println(firstPart, secondPart)
 }
 
-func readInput(fileName string) string {
+func mustReadInput(fileName string) string {
 	f, err := os.ReadFile(fileName)
 	if err != nil {
 		panic(err)
@@ -26,9 +26,9 @@ func readInput(fileName string) string {
 	return string(f)
 }
 
-func groupAndSumEveryElveCalories() []int {
+func mustGroupAndSumEveryElveCalories() []int {
 	var (
-		input    = readInput("./input.txt")
+		input    = mustReadInput("./input.txt")
 		scanner  = bufio.NewScanner(strings.NewReader(input))
 		curr     = 0
 		calories []int
@@ -36,7 +36,7 @@ func groupAndSumEveryElveCalories() []int {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if line != "" {
-			curr += stringToInt(line)
+			curr += mustConvertStringToInt(line)
 		} else {
 			calories = append(calories, curr)
 			curr = 0
@@ -56,7 +56,7 @@ func sum(nums []int) int {
 	return s
 }
 
-func stringToInt(s string) int {
+func mustConvertStringToInt(s string) int {
 	val, err := strconv.Atoi(s)
 	if err != nil {
 		panic(err)
