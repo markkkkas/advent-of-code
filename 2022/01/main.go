@@ -12,8 +12,9 @@ import (
 func main() {
 	calories := groupAndSumEveryElveCalories()
 	sort.Ints(calories)
-	firstPart := calories[len(calories)-1]
-	secondPart := sum(calories[len(calories)-3:])
+	totalElves := len(calories)
+	firstPart := calories[totalElves-1]
+	secondPart := sum(calories[totalElves-3:])
 	fmt.Println(firstPart, secondPart)
 }
 
