@@ -10,9 +10,11 @@ import (
 )
 
 func main() {
-	input := readInput("./input.txt")
-	firstPart(input)
-	secondPart(input)
+	calories := groupAndSumEveryElveCalories()
+	sort.Ints(calories)
+	firstPart := calories[len(calories)-1]
+	secondPart := sum(calories[len(calories)-3:])
+	fmt.Println(firstPart, secondPart)
 }
 
 func readInput(fileName string) string {
@@ -23,52 +25,34 @@ func readInput(fileName string) string {
 	return string(f)
 }
 
-func firstPart(input string) {
+func groupAndSumEveryElveCalories() []int {
 	var (
-		scanner = bufio.NewScanner(strings.NewReader(input))
-		highest = 0
-		curr    = 0
+		input    = readInput("./input.txt")
+		scanner  = bufio.NewScanner(strings.NewReader(input))
+		curr     = 0
+		calories []int
 	)
 	for scanner.Scan() {
-		if scanner.Text() != "" {
-			curr += stringToInt(scanner.Text())
+		line := scanner.Text()
+		if line != "" {
+			curr += stringToInt(line)
 		} else {
-			if curr >= highest {
-				highest = curr
-			}
-
+			calories = append(calories, curr)
 			curr = 0
 		}
 	}
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
-	fmt.Println(highest)
+	return calories
 }
 
-func secondPart(input string) {
-	var (
-		scanner = bufio.NewScanner(strings.NewReader(input))
-		curr    = 0
-		kcals   []int
-	)
-	for scanner.Scan() {
-		if scanner.Text() != "" {
-			curr += stringToInt(scanner.Text())
-		} else {
-			kcals = append(kcals, curr)
-			curr = 0
-		}
+func sum(nums []int) int {
+	s := 0
+	for _, n := range nums {
+		s += n
 	}
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
-	sort.Ints(kcals)
-	sum := 0
-	for _, v := range kcals[len(kcals)-3:] {
-		sum += v
-	}
-	fmt.Println(sum)
+	return s
 }
 
 func stringToInt(s string) int {
