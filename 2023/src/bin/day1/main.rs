@@ -53,8 +53,8 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
 
     let sum = io::BufReader::new(File::open(path)?)
         .lines()
-        .map(|line_result| {
-            let line = line_result.unwrap_or_default();
+        .map(|line| {
+            let line = line.unwrap_or_default();
             replacements
                 .iter()
                 .fold(line, |acc, (key, value)| acc.replace(key, value))
