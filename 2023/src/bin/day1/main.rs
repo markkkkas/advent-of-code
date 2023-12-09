@@ -11,7 +11,7 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
-fn calibrate(line: String) -> (i32, i32) {
+fn calibrate(line: String) -> i32 {
     let mut left: i32 = -1;
     let mut right: i32 = -1;
 
@@ -26,16 +26,14 @@ fn calibrate(line: String) -> (i32, i32) {
         }
     }
 
-    (left, right)
+    format!("{}{}", right, left).parse::<i32>().unwrap()
 }
 
 fn solve_part_one(path: &str) -> io::Result<i32> {
     let mut sum = 0;
 
     for line in io::BufReader::new(File::open(path)?).lines() {
-        let (right, left) = calibrate(line?);
-
-        sum += format!("{}{}", right, left).parse::<i32>().unwrap();
+        sum += calibrate(line?);
     }
 
     Ok(sum)
@@ -62,9 +60,7 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
             line = line.replace(key, &value);
         }
 
-        let (right, left) = calibrate(line);
-
-        sum += format!("{}{}", right, left).parse::<i32>().unwrap();
+        sum += calibrate(line);
     }
 
     Ok(sum)
