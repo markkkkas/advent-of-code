@@ -55,6 +55,7 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
         .lines()
         .map(|line| {
             let line = line.unwrap_or_default();
+
             replacements
                 .iter()
                 .fold(line, |acc, (key, value)| acc.replace(key, value))
