@@ -26,7 +26,7 @@ fn calibrate(line: String) -> i32 {
         }
     }
 
-    format!("{}{}", left, right).parse::<i32>().unwrap()
+    format!("{}{}", left, right).parse().unwrap()
 }
 
 fn solve_part_one(path: &str) -> io::Result<i32> {
