@@ -54,11 +54,11 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
     let sum = io::BufReader::new(File::open(path)?)
         .lines()
         .map(|line| {
-            let line = line.unwrap_or_default();
-
             replacements
                 .iter()
-                .fold(line, |acc, (key, value)| acc.replace(key, value))
+                .fold(line.unwrap_or_default(), |acc, (key, value)| {
+                    acc.replace(key, value)
+                })
         })
         .map(|line| calibrate(line))
         .sum();
