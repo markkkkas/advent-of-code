@@ -30,7 +30,7 @@ fn calibrate(line: String) -> i32 {
 }
 
 fn solve_part_one(path: &str) -> io::Result<i32> {
-    let sum: i32 = io::BufReader::new(File::open(path)?)
+    let sum = io::BufReader::new(File::open(path)?)
         .lines()
         .map(|line| calibrate(line.unwrap_or_default()))
         .sum();
@@ -51,7 +51,7 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
         ("nine", "n9e"),
     ]);
 
-    let sum: i32 = io::BufReader::new(File::open(path)?)
+    let sum = io::BufReader::new(File::open(path)?)
         .lines()
         .map(|line_result| {
             let line = line_result.unwrap_or_default();
