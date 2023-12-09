@@ -12,35 +12,34 @@ fn main() -> io::Result<()> {
 }
 
 fn calibrate(line: String) -> i32 {
-    let mut left: i32 = -1;
-    let mut right: i32 = -1;
+    let mut left = '-';
+    let mut right = '-';
 
     for char in line.chars() {
         if char.is_digit(10) {
-            if left == -1 {
-                left = char.to_digit(10).unwrap() as i32;
-                right = char.to_digit(10).unwrap() as i32;
+            if left == '-' {
+                left = char;
+                right = char;
             } else {
-                right = char.to_digit(10).unwrap() as i32;
+                right = char;
             }
         }
     }
 
-    format!("{}{}", right, left).parse::<i32>().unwrap()
+    format!("{}{}", left, right).parse::<i32>().unwrap()
 }
 
 fn solve_part_one(path: &str) -> io::Result<i32> {
-    let mut sum = 0;
-
-    for line in io::BufReader::new(File::open(path)?).lines() {
-        sum += calibrate(line?);
-    }
+    let sum: i32 = io::BufReader::new(File::open(path)?)
+        .lines()
+        .map(|line| calibrate(line.unwrap_or_default()))
+        .sum();
 
     Ok(sum)
 }
 
 fn solve_part_two(path: &str) -> io::Result<i32> {
-    let m = HashMap::from([
+    let replacements = HashMap::from([
         ("one", "o1e"),
         ("two", "t2o"),
         ("three", "t3e"),
@@ -51,17 +50,17 @@ fn solve_part_two(path: &str) -> io::Result<i32> {
         ("eight", "e8t"),
         ("nine", "n9e"),
     ]);
-    let mut sum = 0;
 
-    for line_result in io::BufReader::new(File::open(path)?).lines() {
-        let mut line = line_result?;
-
-        for (key, value) in m.iter() {
-            line = line.replace(key, &value);
-        }
-
-        sum += calibrate(line);
-    }
+    let sum: i32 = io::BufReader::new(File::open(path)?)
+        .lines()
+        .map(|line_result| {
+            let line = line_result.unwrap_or_default();
+            replacements
+                .iter()
+                .fold(line, |acc, (key, value)| acc.replace(key, value))
+        })
+        .map(|line| calibrate(line))
+        .sum();
 
     Ok(sum)
 }
