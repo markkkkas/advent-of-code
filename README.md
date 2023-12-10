@@ -1,6 +1,7 @@
 # Advent of Code 
 
 ### 2023 Solutions
-| Name               | Language | Solution                             |
-|--------------------|----------|--------------------------------------|
-| Day 1: Trebuchet?! | Rust     | [main.rs](2023/src/bin/day1/main.rs) |
+| Name                  | Language | Solution                        |
+|-----------------------|----------|---------------------------------|
+| Day 1: Trebuchet?!    | Rust     | [day1.rs](2023/src/bin/day1.rs) |
+| Day 2: Cube Conundrum | Rust     | [day2.rs](2023/src/bin/day2.rs) |
