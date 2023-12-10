@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{self, BufRead};
 
 fn main() -> io::Result<()> {
-    let path = "input.txt";
+    let path = "input/day1.txt";
 
     println!("Part 1: {}", solve_part_one(path)?);
     println!("Part 2: {}", solve_part_two(path)?);
